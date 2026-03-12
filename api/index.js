@@ -48,12 +48,12 @@ function formatDate(iso) {
 // ── API Endpoints ──
 
 // Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', version: '1.2-zero-config', time: new Date().toISOString() });
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok', version: '1.3-routing-fix', time: new Date().toISOString() });
 });
 
 // 1. After Event Message
-app.post('/api/generate-aem', async (req, res) => {
+app.post('/generate-aem', async (req, res) => {
   try {
     const data = req.body;
     const dateStr = formatDate(data.eventDate);
@@ -99,7 +99,7 @@ _Reach Your Beyond 🚀_
 });
 
 // 2. Email Draft
-app.post('/api/generate-email', async (req, res) => {
+app.post('/generate-email', async (req, res) => {
   try {
     const data = req.body;
     const dateStr = formatDate(data.eventDate);

@@ -164,7 +164,7 @@
       // Scroll into view
       outputsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (err) {
-      showToast('Generation failed. Please try again.');
+      showToast('Error: ' + err.message);
       console.error(err);
     } finally {
       generateBtn.disabled = false;

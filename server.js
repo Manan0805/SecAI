@@ -49,6 +49,11 @@ function formatDate(iso) {
 
 // ── API Endpoints ──
 
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', time: new Date().toISOString() });
+});
+
 // 1. After Event Message
 app.post('/api/generate-aem', async (req, res) => {
   try {

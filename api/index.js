@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const axios = require('axios');
 
 const app = express();
@@ -10,7 +9,6 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Helper to call Gemini REST API
 async function callGemini(prompt) {
@@ -51,7 +49,7 @@ function formatDate(iso) {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', time: new Date().toISOString() });
+  res.json({ status: 'ok', version: '1.2-zero-config', time: new Date().toISOString() });
 });
 
 // 1. After Event Message

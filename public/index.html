@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecAI — AI Assistant for Club Secretaries</title>
+  <meta name="description" content="SecAI generates polished after-event messages and email drafts for Leo Club secretaries." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header id="app-header">
+    <h1>Sec<span class="accent">AI</span></h1>
+    <p class="subtitle">AI Assistant for Club Secretaries</p>
+  </header>
+
+  <!-- ── Main ── -->
+  <main id="app-main">
+
+    <!-- Form Card -->
+    <section class="card" id="form-card">
+      <h2>Event Details</h2>
+      <form id="event-form" novalidate>
+
+        <div class="field">
+          <label for="eventName">Event Name</label>
+          <input type="text" id="eventName" placeholder="e.g. Tree Plantation Drive" required />
+          <span class="error-msg" id="eventName-error"></span>
+        </div>
+
+        <div class="field">
+          <label for="eventType">Event Type</label>
+          <select id="eventType" required>
+            <option value="">Select type</option>
+            <option value="Fellowship">Fellowship</option>
+            <option value="Service">Service</option>
+          </select>
+          <span class="error-msg" id="eventType-error"></span>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="eventDate">Date</label>
+            <input type="date" id="eventDate" required />
+            <span class="error-msg" id="eventDate-error"></span>
+          </div>
+          <div class="field">
+            <label for="guest">Guest / Speaker</label>
+            <input type="text" id="guest" placeholder="(optional)" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="participants">Number of Participants</label>
+            <input type="number" id="participants" min="1" placeholder="e.g. 25" required />
+            <span class="error-msg" id="participants-error"></span>
+          </div>
+          <div class="field">
+            <label for="leoisticHours">Leoistic Hours</label>
+            <input type="number" id="leoisticHours" min="0" step="0.5" placeholder="e.g. 4" required />
+            <span class="error-msg" id="leoisticHours-error"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="eventDescription">Event Description</label>
+          <textarea id="eventDescription" rows="4" placeholder="Brief summary of the event…" required></textarea>
+          <span class="error-msg" id="eventDescription-error"></span>
+        </div>
+
+        <button type="submit" id="generate-btn">
+          <span class="btn-text">Generate</span>
+          <span class="btn-loader" aria-hidden="true"></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Output Cards (hidden until generated) -->
+    <section id="outputs" class="outputs hidden">
+
+      <!-- After Event Message -->
+      <div class="card output-card" id="aem-card">
+        <div class="output-header">
+          <h2>After Event Message</h2>
+          <div class="output-actions">
+            <button class="icon-btn copy-btn" data-target="aem-content" title="Copy">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="copy-label">Copy</span>
+            </button>
+            <button class="icon-btn regen-btn" data-type="aem" title="Regenerate">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              <span>Regenerate</span>
+            </button>
+          </div>
+        </div>
+        <pre class="output-content" id="aem-content"></pre>
+      </div>
+
+      <!-- Email Draft -->
+      <div class="card output-card" id="email-card">
+        <div class="output-header">
+          <h2>Email Draft</h2>
+          <div class="output-actions">
+            <button class="icon-btn copy-btn" data-target="email-content" title="Copy">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="copy-label">Copy</span>
+            </button>
+            <button class="icon-btn regen-btn" data-type="email" title="Regenerate">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              <span>Regenerate</span>
+            </button>
+          </div>
+        </div>
+        <pre class="output-content" id="email-content"></pre>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

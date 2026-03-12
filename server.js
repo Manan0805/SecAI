@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const axios = require('axios');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,19 +25,17 @@ async function callGemini(prompt) {
     generationConfig: { temperature: 0.7 }
   };
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.error?.message || 'Gemini API Error');
+  try {
+    const response = await axios.post(url, payload, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.data.candidates[0].content.parts[0].text;
+  } catch (err) {
+    if (err.response) {
+      throw new Error(`Gemini API Error: ${err.response.data.error?.message || err.response.statusText}`);
+    }
+    throw new Error(`Network Error: ${err.message}`);
   }
-
-  const data = await response.json();
-  return data.candidates[0].content.parts[0].text;
 }
 
 // Ensure date formatting helper from frontend is also available for backend prompts

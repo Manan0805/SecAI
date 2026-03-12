@@ -17,7 +17,7 @@ async function callGemini(prompt) {
     throw new Error('Missing or invalid GEMINI_API_KEY in .env file');
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
   const payload = {
     contents: [{ parts: [{ text: prompt }] }],
     generationConfig: { temperature: 0.7 }
@@ -49,7 +49,7 @@ function formatDate(iso) {
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', version: '1.3-routing-fix', time: new Date().toISOString() });
+  res.json({ status: 'ok', version: '1.4-model-fix', time: new Date().toISOString() });
 });
 
 // 1. After Event Message
